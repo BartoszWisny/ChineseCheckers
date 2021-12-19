@@ -6,12 +6,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
 
-public class EventForCreateGameStage implements EventHandler<ActionEvent> {
+public class CreateGameStageEvent implements EventHandler<ActionEvent> {
 	private Stage stage;
 	private String playersNumber;
 	private Client client;
 	
-	public EventForCreateGameStage(Stage stage, String playersNumber, Client client) {
+	public CreateGameStageEvent(Stage stage, String playersNumber, Client client) {
 		this.stage = stage;
 		this.playersNumber = playersNumber;
 		this.client = client;

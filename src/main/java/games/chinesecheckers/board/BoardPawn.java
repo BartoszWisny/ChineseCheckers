@@ -1,7 +1,9 @@
 package games.chinesecheckers.board;
 
+import games.chinesecheckers.client.Client;
 import games.chinesecheckers.game.board.field.Field;
 import games.chinesecheckers.game.board.field.FieldColor;
+import games.chinesecheckers.game.board.field.FieldStatus;
 import games.chinesecheckers.game.board.pawn.Pawn;
 
 import javafx.scene.input.MouseEvent;
@@ -19,6 +21,13 @@ public class BoardPawn extends Circle implements BoardElement {
 		this.addEventFilter(MouseEvent.MOUSE_CLICKED, board);
 	}
 
+	public void move(Field newField, Client client) {
+        this.setCoordinates(newField);
+        pawn.getField().setStatus(FieldStatus.FREE);
+		newField.setStatus(FieldStatus.OCCUPIED);
+		this.pawn.setField(newField);
+	}
+	
 	private void setCoordinates(Field field) {
 		this.setCenterX(this.calculateX(field));
 		this.setCenterY(this.calculateY(field));

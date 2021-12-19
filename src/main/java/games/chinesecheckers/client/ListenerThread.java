@@ -3,6 +3,7 @@ package games.chinesecheckers.client;
 import games.chinesecheckers.board.BoardCurrent;
 import games.chinesecheckers.game.Game;
 import games.chinesecheckers.game.gamesettings.GameSettings;
+import games.chinesecheckers.game.player.Player;
 import games.chinesecheckers.gui.InfoStage;
 import games.chinesecheckers.gui.LobbyStage;
 
@@ -67,8 +68,52 @@ public class ListenerThread extends Thread {
 							    stage.show();
 							}
 						});
-                    } 
-                    // ...
+                    } else if (currentLine.contains("move")) {
+                        Platform.runLater(new Runnable() {
+							public void run() {
+							    try {
+							        ListenerThread.this.board.makeMove(currentLine);
+							        System.out.println(currentLine);
+							        ListenerThread.this.board.setLabel("Wait for your turn...");
+							    }
+							    catch (Exception e) {
+							        e.printStackTrace();
+							    }
+							}
+						});
+                    } else if (currentLine.contains("Your turn.")) {
+                        Platform.runLater(new Runnable() {
+							public void run() {
+							    board.activate();
+							    System.out.println(currentLine);
+							    board.setLabel("Your turn!");
+							}
+						});
+                    } else if (currentLine.contains("winner")) {
+                        String[] string = currentLine.split(" ");
+                        int number = Integer.parseInt(string[1]);
+
+                        if (number == this.playerNumber) {
+                            Platform.runLater(new Runnable() {
+								public void run() {
+								    InfoStage newStage = new InfoStage("You won!");
+								    System.out.println(currentLine);
+								    newStage.show();
+								}
+							});
+                        } else {
+                            Player player = this.game.getPlayerByNumber(number);
+                            final String color = player.getColor().toString();
+
+                            Platform.runLater(new Runnable() {
+								public void run() {
+								    InfoStage newStage = new InfoStage(color + " won!");
+								    System.out.println(currentLine);
+								    newStage.show();
+								}
+							});
+                        }
+                    }
                 }
             }
             catch (Exception e) {

@@ -2,15 +2,20 @@ package games.chinesecheckers.client;
 
 import java.io.IOException;
 
-import games.chinesecheckers.gui.EventForCreateButton;
-import games.chinesecheckers.gui.EventForJoinButton;
+import games.chinesecheckers.gui.CreateButtonEvent;
+import games.chinesecheckers.gui.JoinButtonEvent;
 import games.chinesecheckers.gui.ServerInfoStage;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -46,9 +51,10 @@ public class RunClient extends Application {
         buttonJoin.setFont(new Font("Times New Roman", 18));
         
         pane.getChildren().addAll(buttonCreate, buttonJoin);
+        pane.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
         
-        buttonCreate.setOnAction(new EventForCreateButton(startStage, client));
-		buttonJoin.setOnAction(new EventForJoinButton(startStage, client));
+        buttonCreate.setOnAction(new CreateButtonEvent(startStage, client));
+		buttonJoin.setOnAction(new JoinButtonEvent(startStage, client));
 				
 		Scene scene = new Scene(pane, 140, 120);
 		startStage.setScene(scene);

@@ -5,11 +5,11 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
 
-public class EventForJoinButton implements EventHandler<ActionEvent> {
+public class JoinButtonEvent implements EventHandler<ActionEvent> {
 	private Stage stage;
 	private Client client;
 	
-	public EventForJoinButton(Stage stage, Client client) {
+	public JoinButtonEvent(Stage stage, Client client) {
 		this.stage = stage;
 		this.client = client;
 	}

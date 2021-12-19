@@ -9,7 +9,9 @@ import games.chinesecheckers.game.gamebuilder.GameBuilder;
 import games.chinesecheckers.game.gamesettings.GameSettings;
 import games.chinesecheckers.game.player.Player;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -17,6 +19,7 @@ public final class Game {
     private GameSettings gameSettings;
     private Player[] players;
     private Pawn[] pawns;
+    private List<Player> winners = new ArrayList<Player>();
     private Board board;
     private GameBuilder gameBuilder;
 
@@ -94,5 +97,17 @@ public final class Game {
         else {
             throw new Exception("Field is empty");
         }
+    }
+
+    public void addWinner(Player winner) {
+    	this.winners.add(winner);
+    }
+    
+    public boolean isWinner(Player player) {
+    	return this.winners.contains(player);
+    }
+    
+    public int getNumberOfWinners() {
+    	return this.winners.size();
     }
 }

@@ -5,11 +5,16 @@ import games.chinesecheckers.client.ConnectionData;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -48,6 +53,7 @@ public class ServerInfoStage extends Stage {
         button.setMinWidth(100.0);
         button.setFont(new Font("Times New Roman", 18));
         
+        pane.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
         pane.getChildren().addAll(ipLabel, ipField, portLabel, portField, button);
         
         Scene scene = new Scene(pane, 340, 180);

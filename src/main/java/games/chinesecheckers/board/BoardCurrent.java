@@ -8,6 +8,7 @@ import games.chinesecheckers.game.Game;
 import games.chinesecheckers.game.board.field.Field;
 import games.chinesecheckers.game.board.pawn.Pawn;
 import games.chinesecheckers.game.player.Player;
+import games.chinesecheckers.gui.SkipTurnEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -28,10 +29,14 @@ import javafx.stage.StageStyle;
 public class BoardCurrent extends Stage implements EventHandler<MouseEvent> {
 	private Game game;
 	private Player player;
+	private BoardPawn activePawn;
+	private Client client;
+	private boolean active;
 	private List<BoardPawn> pawns;
 	private Label turnLabel;
 	private Button skipButton;
 	private Label colorLabel;
+	private SkipTurnEvent skipEvent;
 	private Label emptyLabel1;
 	private Label emptyLabel2;
 	private Label emptyLabel3;
@@ -40,11 +45,16 @@ public class BoardCurrent extends Stage implements EventHandler<MouseEvent> {
 	public BoardCurrent(Game game, int numberOfPlayer, Client client) {
 		this.game = game;
 		this.setResizable(false);
+		this.activePawn = null;
 		this.player = game.getPlayerByNumber(numberOfPlayer);
 		this.colorLabel = new Label("You are " + player.getColor().toString() + ".");
+		this.client = client;
+		this.active = false;
 		this.pawns = new ArrayList<BoardPawn>();
 		this.turnLabel = new Label("Wait for you turn...");
 		this.skipButton = new Button("Skip turn");
+		this.skipEvent = new SkipTurnEvent(client, this);
+		this.skipButton.setOnAction(skipEvent);
 		this.emptyLabel1 = new Label("		");
 		this.emptyLabel2 = new Label("		");
 		this.emptyLabel3 = new Label("		");
@@ -108,11 +118,61 @@ public class BoardCurrent extends Stage implements EventHandler<MouseEvent> {
 		group.getChildren().add(boardPawn);
 	}
 	
+	private boolean isMyElement(BoardElement element) {
+		return element.getColor().equals(player.getColor());
+	}
+	
+	private BoardPawn getBoardPawn(Pawn pawn) throws Exception {
+		for(BoardPawn boardPawn: this.pawns) {
+			if(boardPawn.getPawn() == pawn)
+				return boardPawn;
+		}
+		throw new Exception("Pawn doesn't exist");
+	}
+	
 	public void setLabel(String string) {
 		this.turnLabel.setText(string);
 	}
 	
-	public void handle(MouseEvent event) {
+	public void activate() {
+		this.active = true;
+		this.skipEvent.activate();
+	}
+	
+	public void setUnactive() {
+		this.active = false;
+	}
+	
+	public void makeMove(String moveLine) throws Exception {
+		String[] line = moveLine.split(" ");
+		int oldDiagonal = Integer.parseInt(line[1]);
+		int oldRow = Integer.parseInt(line[2]);
+		Pawn pawn = game.getPawnByField(game.getBoard().getFieldByCoordinates(oldDiagonal, oldRow));
+		int newDiagonal = Integer.parseInt(line[3]);
+		int newRow = Integer.parseInt(line[4]);
 		
+		Field newField = game.getBoard().getFieldByCoordinates(newDiagonal, newRow);
+		this.getBoardPawn(pawn).move(newField, client);
+		
+		this.activePawn = null;
+		this.active = false;
+		this.skipEvent.setUnactive();
+	}
+
+	public void handle(MouseEvent event) {
+		Object source = event.getSource();
+		BoardElement element = (BoardElement) source;
+		
+		if(this.active == true && element.isPawn() && isMyElement(element)) {
+			this.activePawn = (BoardPawn) element;
+		}
+		else if(element.isField() && this.active == true) {
+			BoardField field = (BoardField) element;
+			Field newField = field.getField();
+			if(this.activePawn != null) {
+				client.sendOption(activePawn.getPawn().getField().currentFieldToString() + " " + newField.currentFieldToString());
+			}
+		}
 	}
 }
+
