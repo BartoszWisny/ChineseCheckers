@@ -72,9 +72,9 @@ public class ListenerThread extends Thread {
                         Platform.runLater(new Runnable() {
 							public void run() {
 							    try {
-							        ListenerThread.this.board.makeMove(currentLine);
+							        board.makeMove(currentLine);
 							        System.out.println(currentLine);
-							        ListenerThread.this.board.setLabel("Wait for your turn...");
+							        board.setLabel("Wait for your turn...");
 							    }
 							    catch (Exception e) {
 							        e.printStackTrace();

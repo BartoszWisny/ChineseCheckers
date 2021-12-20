@@ -1,6 +1,7 @@
 package games.chinesecheckers.game;
 
 import games.chinesecheckers.game.board.Board;
+import games.chinesecheckers.game.board.BoardInfo;
 import games.chinesecheckers.game.board.field.Field;
 import games.chinesecheckers.game.board.field.FieldColor;
 import games.chinesecheckers.game.board.pawn.Pawn;
@@ -45,7 +46,7 @@ public final class Game {
     }
 
     public Pawn[] getPlayerPawns(FieldColor playerColor) {
-        Pawn[] playerPawns = new Pawn[10];
+        Pawn[] playerPawns = new Pawn[BoardInfo.NUMBER_OF_HOME_FIELDS];
         int i = 0;
         for (Pawn pawn : pawns) {
             if (pawn.getPawnColor() == playerColor) {

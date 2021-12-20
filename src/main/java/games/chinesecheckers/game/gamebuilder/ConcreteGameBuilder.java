@@ -2,6 +2,7 @@ package games.chinesecheckers.game.gamebuilder;
 
 import games.chinesecheckers.game.Game;
 import games.chinesecheckers.game.board.Board;
+import games.chinesecheckers.game.board.BoardInfo;
 import games.chinesecheckers.game.board.field.Field;
 import games.chinesecheckers.game.board.field.FieldColor;
 import games.chinesecheckers.game.board.pawn.Pawn;
@@ -32,7 +33,7 @@ public class ConcreteGameBuilder implements GameBuilder {
     }
 
     public Pawn[] buildPawns(int playersNumbers[]) {
-    	Pawn[] pawns = new Pawn[10 * playersNumbers.length];
+    	Pawn[] pawns = new Pawn[BoardInfo.NUMBER_OF_HOME_FIELDS * playersNumbers.length];
         int currentCounter = 0;
         for (int playerCounter = 0; playerCounter < playersNumbers.length; playerCounter++) {
             FieldColor currentPlayerColor = FieldColor.setColor(playersNumbers[playerCounter]);

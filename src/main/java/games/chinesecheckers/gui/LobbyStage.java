@@ -56,13 +56,13 @@ public class LobbyStage extends Stage {
         pane.setAlignment(Pos.CENTER);
         
         Label gameID = new Label("Game ID");
-        gameID.setFont(new Font("Times New Roman", 14));
+        gameID.setFont(new Font("Times New Roman", 16));
         Label players = new Label("Players");
-        players.setFont(new Font("Times New Roman", 14));
+        players.setFont(new Font("Times New Roman", 16));
         Label joinedPlayers = new Label("Joined players");
-        joinedPlayers.setFont(new Font("Times New Roman", 14));
+        joinedPlayers.setFont(new Font("Times New Roman", 16));
         Label joinGame = new Label("Join game");
-        joinGame.setFont(new Font("Times New Roman", 14));
+        joinGame.setFont(new Font("Times New Roman", 16));
 
         ObservableList<GameInfoRow> rows = FXCollections.observableArrayList();
         

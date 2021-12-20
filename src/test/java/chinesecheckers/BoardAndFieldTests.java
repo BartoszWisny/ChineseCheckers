@@ -12,7 +12,7 @@ import games.chinesecheckers.game.board.field.IllegalField;
 import games.chinesecheckers.game.board.field.NeutralField;
 
 public class BoardAndFieldTests {
-	private Board board = new Board();
+	private Board board = new Board(); 
 
 	@Test
     public void hexagonFieldsTest() {

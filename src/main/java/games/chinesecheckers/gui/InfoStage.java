@@ -30,7 +30,7 @@ public class InfoStage extends Stage {
         setResizable(false);
         
         InfoStage.this.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            public void handle(WindowEvent t) {
+            public void handle(WindowEvent event) {
             	Platform.exit();
                 System.exit(0);
             }

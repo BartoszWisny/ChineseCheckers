@@ -35,7 +35,7 @@ public class CreateGameStage extends Stage {
         choiceBox.setMinWidth(70.0);
         choiceBox.setStyle("-fx-font: 18px \"Serif\";");
         final Button button = new Button("OK");
-        AnchorPane.setLeftAnchor(button, 95.0);
+        AnchorPane.setLeftAnchor(button, 110.0);
         AnchorPane.setTopAnchor(button, 60.0);
         button.setMinHeight(30.0);
         button.setMinWidth(40.0);

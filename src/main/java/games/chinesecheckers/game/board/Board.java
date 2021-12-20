@@ -12,7 +12,7 @@ import games.chinesecheckers.game.board.field.fieldinitializer.FieldInitializer;
 
 public class Board {
 
-    private Field[] fields = new Field[BoardInfo.FIELDS];
+    private Field[] fields = new Field[BoardInfo.NUMBER_OF_FIELDS];
     private FieldInitializer fieldInitializer;
 
     public Board() {
@@ -29,7 +29,7 @@ public class Board {
     }
     
     public Field[] getFields(FieldColor color) {
-        Field[] matchingFields = new Field[10];
+        Field[] matchingFields = new Field[BoardInfo.NUMBER_OF_HOME_FIELDS];
         int i = 0;
         for (Field field : fields) {
             if (field.getColor() == color) {
@@ -51,7 +51,7 @@ public class Board {
             return field.get();
         }
         else {
-            return new IllegalField(0,0);
+            /*throw new Exception("B³¹d!");*/ return new IllegalField(0,0);
         }
     }
 }

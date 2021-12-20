@@ -81,6 +81,7 @@ public class BoardCurrent extends Stage implements EventHandler<MouseEvent> {
         this.skipButton.setMinHeight(30.0);
         this.skipButton.setMinWidth(80.0);
         this.skipButton.setFont(new Font("Times New Roman", 18));
+        this.skipButton.setDisable(true);
         this.emptyLabel1.setFont(new Font("Times New Roman", 18));
         this.emptyLabel2.setFont(new Font("Times New Roman", 18));
         this.emptyLabel3.setFont(new Font("Times New Roman", 18));
@@ -100,11 +101,13 @@ public class BoardCurrent extends Stage implements EventHandler<MouseEvent> {
 		pane.setVgap(20.0);
 		pane.add(group, 0, 0);
 		pane.add(bottomPane, 0, 1);
-		pane.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
+		pane.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+		// pane.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
 		Scene scene = new Scene(pane, pane.prefWidth(0) + 100.0, pane.prefHeight(0) + 30.0);
 		this.setScene(scene);
-		scene.setFill(Color.TRANSPARENT);
-		BoardCurrent.this.initStyle(StageStyle.TRANSPARENT);
+		setResizable(false);
+		// scene.setFill(Color.TRANSPARENT);
+		// BoardCurrent.this.initStyle(StageStyle.TRANSPARENT);
 	}
 	
 	private void drawField(Field field, Group group) {
@@ -137,10 +140,12 @@ public class BoardCurrent extends Stage implements EventHandler<MouseEvent> {
 	public void activate() {
 		this.active = true;
 		this.skipEvent.activate();
+		skipButton.setDisable(false);
 	}
 	
 	public void setUnactive() {
 		this.active = false;
+		skipButton.setDisable(true);
 	}
 	
 	public void makeMove(String moveLine) throws Exception {
@@ -156,7 +161,7 @@ public class BoardCurrent extends Stage implements EventHandler<MouseEvent> {
 		
 		this.activePawn = null;
 		this.active = false;
-		this.skipEvent.setUnactive();
+		this.skipButton.setDisable(true);
 	}
 
 	public void handle(MouseEvent event) {
@@ -175,4 +180,3 @@ public class BoardCurrent extends Stage implements EventHandler<MouseEvent> {
 		}
 	}
 }
-
