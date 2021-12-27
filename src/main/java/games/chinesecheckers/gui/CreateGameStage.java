@@ -16,12 +16,11 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class CreateGameStage extends Stage {
 	
 	public CreateGameStage(final Client client) {
-		this.setTitle("Chinese checkers");
-		
 		AnchorPane pane = new AnchorPane();       
         Label playersLabel = new Label("Number of players: ");
         AnchorPane.setLeftAnchor(playersLabel, 20.0);
@@ -36,17 +35,20 @@ public class CreateGameStage extends Stage {
         choiceBox.setStyle("-fx-font: 18px \"Serif\";");
         final Button button = new Button("OK");
         AnchorPane.setLeftAnchor(button, 110.0);
-        AnchorPane.setTopAnchor(button, 60.0);
+        AnchorPane.setTopAnchor(button, 65.0);
         button.setMinHeight(30.0);
         button.setMinWidth(40.0);
         button.setFont(new Font("Times New Roman", 18));
         
         pane.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+        pane.setStyle("-fx-border-color: black");
         pane.getChildren().addAll(playersLabel, choiceBox, button);
         
-        Scene scene = new Scene(pane, 260, 110);
+        Scene scene = new Scene(pane, 260.0, 115.0);
 		this.setScene(scene);
 		setResizable(false);
+		initStyle(StageStyle.TRANSPARENT);
+		
 		
 		choiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 		    public void changed(ObservableValue<? extends Number> arg, Number number1, Number number2) {

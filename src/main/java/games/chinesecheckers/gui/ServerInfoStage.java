@@ -17,6 +17,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 public class ServerInfoStage extends Stage {
@@ -54,9 +55,10 @@ public class ServerInfoStage extends Stage {
         button.setFont(new Font("Times New Roman", 18));
         
         pane.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+        pane.setStyle("-fx-border-color: black");
         pane.getChildren().addAll(ipLabel, ipField, portLabel, portField, button);
         
-        Scene scene = new Scene(pane, 340, 180);
+        Scene scene = new Scene(pane, 340.0, 180.0);
 
         button.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent e) {
@@ -68,6 +70,7 @@ public class ServerInfoStage extends Stage {
         
         setScene(scene);
         setResizable(false);
+        initStyle(StageStyle.TRANSPARENT);
         
         ServerInfoStage.this.setOnCloseRequest(new EventHandler<WindowEvent>() {
             public void handle(WindowEvent event) {

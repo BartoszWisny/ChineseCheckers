@@ -12,7 +12,7 @@ public class ConcreteFieldInitializer extends FieldInitializer {
         this.fields = board.getFields();
     }
 	
-	public static int /* HEXAGONAL_SIDE - 1 */ n = BoardSize.boardSize;
+	public static int n = BoardSize.boardSize; // HEXAGONAL_SIDE - 1
 	private int currentCounter = 0;
 	
 	public int[][] hexagonBounds() {

@@ -18,6 +18,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 public class RunClient extends Application {
@@ -34,7 +35,6 @@ public class RunClient extends Application {
 		infoStage.showAndWait();
 
     	this.client = new Client(data.address, data.port);
-		startStage.setTitle("Chinese checkers");
 		
 		AnchorPane pane = new AnchorPane();       
         Button buttonCreate = new Button("Create");
@@ -52,13 +52,15 @@ public class RunClient extends Application {
         
         pane.getChildren().addAll(buttonCreate, buttonJoin);
         pane.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+        pane.setStyle("-fx-border-color: black");
         
         buttonCreate.setOnAction(new CreateButtonEvent(startStage, client));
 		buttonJoin.setOnAction(new JoinButtonEvent(startStage, client));
 				
-		Scene scene = new Scene(pane, 140, 120);
+		Scene scene = new Scene(pane, 140.0, 120.0);
 		startStage.setScene(scene);
 		startStage.setResizable(false);
+		startStage.initStyle(StageStyle.TRANSPARENT);
 		startStage.show();
 		
 		startStage.setOnCloseRequest(new EventHandler<WindowEvent>() {

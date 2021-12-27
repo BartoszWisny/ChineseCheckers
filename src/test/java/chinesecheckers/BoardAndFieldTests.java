@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import games.chinesecheckers.game.board.Board;
+import games.chinesecheckers.game.board.BoardInfo;
+import games.chinesecheckers.game.board.BoardSize;
 import games.chinesecheckers.game.board.field.Field;
 import games.chinesecheckers.game.board.field.FieldColor;
 import games.chinesecheckers.game.board.field.FieldStatus;
@@ -12,11 +14,12 @@ import games.chinesecheckers.game.board.field.IllegalField;
 import games.chinesecheckers.game.board.field.NeutralField;
 
 public class BoardAndFieldTests {
-	private Board board = new Board(); 
-
 	@Test
     public void hexagonFieldsTest() {
-        Field possibleHexagonField1 = board.getFieldByCoordinates(4, 8);
+		BoardSize boardSize = new BoardSize();
+		boardSize.boardSize = 4;
+		Board board = new Board();
+		Field possibleHexagonField1 = board.getFieldByCoordinates(4, 8);
         Field possibleHexagonField2 = board.getFieldByCoordinates(4, 12);
         Field possibleHexagonField3 = board.getFieldByCoordinates(12, 4);
         Assert.assertTrue(possibleHexagonField1.isLegalField() && !possibleHexagonField1.isHomeField());
@@ -26,7 +29,10 @@ public class BoardAndFieldTests {
 
     @Test
 	public void homeFieldsTest() {
-        Field possibleBlueField = board.getFieldByCoordinates(11, 1);
+    	BoardSize boardSize = new BoardSize();
+		boardSize.boardSize = 4;
+		Board board = new Board();
+    	Field possibleBlueField = board.getFieldByCoordinates(11, 1);
         Field possibleWhiteField = board.getFieldByCoordinates(14, 5);
         Field possibleRedField = board.getFieldByCoordinates(10, 12);
         Field possibleBlackField = board.getFieldByCoordinates(5, 13);
@@ -43,6 +49,9 @@ public class BoardAndFieldTests {
     
     @Test
     public void getFieldByCoordinatesTest() {
+    	BoardSize boardSize = new BoardSize();
+		boardSize.boardSize = 4;
+		Board board = new Board();
     	Field possibleField = board.getFieldByCoordinates(1, 1);
     	IllegalField illegalField = new IllegalField(0,0);
     	Assert.assertEquals(illegalField.getClass(), possibleField.getClass());
@@ -50,6 +59,9 @@ public class BoardAndFieldTests {
     
     @Test
     public void getFieldsTest() {
+    	BoardSize boardSize = new BoardSize();
+		boardSize.boardSize = 4;
+		Board board = new Board();
     	FieldColor color;
     	Field[] possibleFields;
     	
@@ -70,6 +82,9 @@ public class BoardAndFieldTests {
     
     @Test
     public void fieldColorTest() {
+    	BoardSize boardSize = new BoardSize();
+		boardSize.boardSize = 4;
+		Board board = new Board();
     	int colorNumber;
     	Field testField;
     	
@@ -118,6 +133,9 @@ public class BoardAndFieldTests {
     
     @Test
     public void fieldTest() {
+    	BoardSize boardSize = new BoardSize();
+		boardSize.boardSize = 4;
+		Board board = new Board();
     	Field testField;
     	testField = new NeutralField(8, 8);
     	String fieldString = testField.currentFieldToString();

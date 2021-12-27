@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import games.chinesecheckers.game.Game;
+import games.chinesecheckers.game.board.Board;
+import games.chinesecheckers.game.board.BoardSize;
 import games.chinesecheckers.game.board.field.Field;
 import games.chinesecheckers.game.board.field.FieldColor;
 import games.chinesecheckers.game.board.field.HomeField;
@@ -31,6 +33,9 @@ public class GameTests {
 	
 	@Test
 	public void fieldCoordinatesTest() {
+		BoardSize boardSize = new BoardSize();
+		boardSize.boardSize = 4;
+		Board board = new Board();
 		int numberOfPlayers = 6;
 		Field testField;
 		Game game = this.createTestGame(numberOfPlayers);
@@ -58,6 +63,9 @@ public class GameTests {
 	
 	@Test
 	public void pawnFieldTest() {
+		BoardSize boardSize = new BoardSize();
+		boardSize.boardSize = 4;
+		Board board = new Board();
 		int numberOfPlayers;
 		Field testField;
 		Game game;
@@ -83,6 +91,9 @@ public class GameTests {
 	
 	@Test (expected = Exception.class)
 	public void exceptionGetPawnByFieldTest() throws Exception {
+		BoardSize boardSize = new BoardSize();
+		boardSize.boardSize = 4;
+		Board board = new Board();
 		int numberOfPlayers = 2;
 		Game game = this.createTestGame(numberOfPlayers);
 		Field field = game.getBoard().getFieldByCoordinates(14, 14);
@@ -91,6 +102,9 @@ public class GameTests {
 	
 	@Test
 	public void pawnTest() {
+		BoardSize boardSize = new BoardSize();
+		boardSize.boardSize = 4;
+		Board board = new Board();
 		Pawn pawn;
 		Field testField;
 		FieldColor testColor;
@@ -124,6 +138,9 @@ public class GameTests {
 	
 	@Test
 	public void gameTest() {
+		BoardSize boardSize = new BoardSize();
+		boardSize.boardSize = 4;
+		Board board = new Board();
 		String line = "3o";
 		GameSettings settings = new GameSettings(line);
 		Game testGame = new Game(settings);

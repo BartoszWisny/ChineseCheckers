@@ -18,6 +18,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.util.List;
 
@@ -68,6 +69,7 @@ public class LobbyStage extends Stage {
         
         pane.addRow(0, gameID, players, joinedPlayers, joinGame);
         pane.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
+        pane.setStyle("-fx-border-color: black");
         
         for (String argLine : args) {
             String[] parameters = argLine.split(" ");
@@ -88,8 +90,9 @@ public class LobbyStage extends Stage {
             currentRow++;
         }
 
-        Scene scene = new Scene(pane, 400.0, 300.0);
+        Scene scene = new Scene(pane, 400.0, currentRow * 50.0);
         setScene(scene);
         setResizable(false);
+        initStyle(StageStyle.TRANSPARENT);
     }
 }

@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -55,9 +56,9 @@ public class BoardCurrent extends Stage implements EventHandler<MouseEvent> {
 		this.skipButton = new Button("Skip turn");
 		this.skipEvent = new SkipTurnEvent(client, this);
 		this.skipButton.setOnAction(skipEvent);
-		this.emptyLabel1 = new Label("		");
-		this.emptyLabel2 = new Label("		");
-		this.emptyLabel3 = new Label("		");
+		this.emptyLabel1 = new Label("	");
+		this.emptyLabel2 = new Label("	");
+		this.emptyLabel3 = new Label("	");
 		this.forfeitButton = new Button("Forfeit");
 		
 		drawBoard();
@@ -96,18 +97,18 @@ public class BoardCurrent extends Stage implements EventHandler<MouseEvent> {
         bottomPane.add(emptyLabel3, 5, 0);
         bottomPane.add(forfeitButton, 6, 0);
 		
-		GridPane pane = new GridPane();
-		pane.setAlignment(Pos.CENTER);
-		pane.setVgap(20.0);
-		pane.add(group, 0, 0);
-		pane.add(bottomPane, 0, 1);
-		pane.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
-		// pane.setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
-		Scene scene = new Scene(pane, pane.prefWidth(0) + 100.0, pane.prefHeight(0) + 30.0);
+		AnchorPane pane = new AnchorPane();
+		AnchorPane.setLeftAnchor(group, 20.0);
+		AnchorPane.setTopAnchor(group, 20.0);
+		AnchorPane.setLeftAnchor(bottomPane, 20.0);
+		AnchorPane.setTopAnchor(bottomPane, 700.0);
+		pane.getChildren().addAll(group, bottomPane);
+        pane.setBackground(new Background(new BackgroundFill(Color.LIGHTSALMON, CornerRadii.EMPTY, Insets.EMPTY)));
+        pane.setStyle("-fx-border-color: black");
+		Scene scene = new Scene(pane, pane.prefWidth(0) + 20.0, pane.prefHeight(0) + 20.0);
 		this.setScene(scene);
 		setResizable(false);
-		// scene.setFill(Color.TRANSPARENT);
-		// BoardCurrent.this.initStyle(StageStyle.TRANSPARENT);
+		initStyle(StageStyle.TRANSPARENT);
 	}
 	
 	private void drawField(Field field, Group group) {

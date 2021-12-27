@@ -3,6 +3,8 @@ package chinesecheckers;
 import org.junit.Assert;
 import org.junit.Test;
 
+import games.chinesecheckers.game.board.Board;
+import games.chinesecheckers.game.board.BoardSize;
 import games.chinesecheckers.game.board.field.FieldColor;
 import games.chinesecheckers.game.player.NewPlayer;
 import games.chinesecheckers.game.player.Player;
@@ -11,6 +13,9 @@ import games.chinesecheckers.ruleset.MoveDetails;
 public class RulesetTests {
 	@Test
 	public void moveDetailsTest() {
+		BoardSize boardSize = new BoardSize();
+		boardSize.boardSize = 4;
+		Board board = new Board();
 		FieldColor testColor;
 		Player testPlayer;
 		String moveLine;
