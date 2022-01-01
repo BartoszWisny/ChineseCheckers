@@ -28,9 +28,6 @@ public class GameAnalyzer {
         	}
         }
         
-        if(!oldOccupiedAndNewFree(oldField, newField))
-            return false;
-        
         Pawn activePawn = game.getPawnByField(oldField);
         
         if (lastMovedPawn != null && activePawn != lastMovedPawn) {
@@ -47,10 +44,6 @@ public class GameAnalyzer {
             return moveIsJump(oldField, newField);
     }
 
-    private boolean oldOccupiedAndNewFree(Field oldField, Field newField) {
-        return !oldField.isFreeField() && newField.isFreeField();
-    }
-
     private boolean pawnColorMatches(Pawn pawn, Player player) {
         return pawn.getPawnColor() == player.getColor();
     }
@@ -59,7 +52,7 @@ public class GameAnalyzer {
         return moveIsStandard(oldField, newField) || moveIsJump(oldField, newField);
     }
 
-    private boolean moveIsStandard(Field oldField, Field newField) {
+    public boolean moveIsStandard(Field oldField, Field newField) {
         int diagonalOldField = oldField.getDiagonal();
         int rowOldField = oldField.getRow();
         int diagonalNewField = newField.getDiagonal();

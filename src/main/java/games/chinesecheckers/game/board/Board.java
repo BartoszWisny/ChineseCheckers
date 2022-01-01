@@ -51,7 +51,7 @@ public class Board {
             return field.get();
         }
         else {
-            /*throw new Exception("B³¹d!");*/ return new IllegalField(0,0);
+            return new IllegalField(0,0);
         }
     }
 }

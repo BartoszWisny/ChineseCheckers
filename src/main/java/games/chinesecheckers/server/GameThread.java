@@ -18,7 +18,7 @@ import java.util.Random;
 
 public class GameThread extends Thread {
     private boolean started = false;
-    private boolean isOver = false;
+    public boolean isOver = false;
     private CommunicationData communicationData = new CommunicationData();
     private Game game;
     private GameAnalyzer validator;
@@ -54,7 +54,7 @@ public class GameThread extends Thread {
             System.out.println("Waiting for " + (game.getNumberOfPlayers() - numberOfJoinedPlayers)  + " more players");
             try {
                 synchronized(this) {
-                    wait(5000);
+                    wait(2000);
                 }
             }
             catch (InterruptedException ex) {}
@@ -70,13 +70,13 @@ public class GameThread extends Thread {
                 if(!this.isWinner(currentPlayerNumber)) {
                 	MoveDetails newMoveDetails = listenForMove();
                 	makeMove(newMoveDetails);
-                }
-                
-                endMove();
+                	endMove();
+                } else {
+                	currentPlayerNumber = (currentPlayerNumber + 1) % game.getNumberOfPlayers();
+                }         
            }
-           catch (Exception ex) {
+           catch (Exception e) {
                 System.out.println("Making move error");
-                ex.printStackTrace();
             }
         }
     }
@@ -149,6 +149,7 @@ public class GameThread extends Thread {
             	this.addWinner(currentPlayerNumber);
             	this.communicationData.sendMessageToAllPlayers("winner " + currentPlayerNumber);
             }
+    		
             if(this.over())
             	this.isOver = true;
 			
@@ -168,9 +169,8 @@ public class GameThread extends Thread {
             if(this.over())
             	this.isOver = true;
             
-            currentPlayerNumber = (currentPlayerNumber + 1) % game.getNumberOfPlayers();
+           currentPlayerNumber = (currentPlayerNumber + 1) % game.getNumberOfPlayers();            
         }
-
     }
 
     private boolean hasPossibleJumps(Pawn pawn) throws Exception {
@@ -178,7 +178,7 @@ public class GameThread extends Thread {
     }
     
     private boolean over() {
-    	return this.game.getNumberOfPlayers() - 1 == this.game.getNumberOfWinners();
+    	return this.numberOfJoinedPlayers == this.game.getNumberOfWinners();
     }
     
     private boolean hasFinished(int number) {

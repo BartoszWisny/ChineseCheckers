@@ -1,7 +1,8 @@
 package games.chinesecheckers.gui;
 
 import games.chinesecheckers.client.Client;
-
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,12 +20,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 import java.util.List;
 
 public class LobbyStage extends Stage {
-    private int currentRow = 1;
-    
+	private int currentRow = 1;
+    private boolean noGameToJoin = true;
+	
     private class GameInfoRow {
         public Label gameIDLabel;
         public Label playersLabel;
@@ -89,10 +92,34 @@ public class LobbyStage extends Stage {
             pane.addRow(currentRow, row.gameIDLabel, row.playersLabel, row.joinedPlayersLabel, row.button);
             currentRow++;
         }
-
+        
         Scene scene = new Scene(pane, 400.0, currentRow * 50.0);
-        setScene(scene);
-        setResizable(false);
-        initStyle(StageStyle.TRANSPARENT);
+	    setScene(scene);
+	    setResizable(false);
+	    initStyle(StageStyle.UNDECORATED);
+
+        for (GameInfoRow row : rows) {
+        	if (!row.button.isDisabled()) {
+        		noGameToJoin = false;
+        	}
+        }
+        
+        if (noGameToJoin) {
+        	Platform.runLater(new Runnable() {
+				public void run() {
+					LobbyStage.this.close();
+					final InfoStage newStage = new InfoStage("No game found!");
+					newStage.show();
+					PauseTransition delay = new PauseTransition(Duration.seconds(10));
+					delay.setOnFinished(new EventHandler<ActionEvent>() {
+						public void handle(ActionEvent event) {
+							newStage.close();
+							System.exit(0);
+						}
+					});
+					delay.play();
+				}
+			});
+        } 
     }
 }

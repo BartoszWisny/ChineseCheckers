@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import games.chinesecheckers.game.board.Board;
-import games.chinesecheckers.game.board.BoardInfo;
 import games.chinesecheckers.game.board.BoardSize;
 import games.chinesecheckers.game.board.field.Field;
 import games.chinesecheckers.game.board.field.FieldColor;

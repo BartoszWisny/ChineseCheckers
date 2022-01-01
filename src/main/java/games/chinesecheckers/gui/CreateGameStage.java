@@ -47,7 +47,7 @@ public class CreateGameStage extends Stage {
         Scene scene = new Scene(pane, 260.0, 115.0);
 		this.setScene(scene);
 		setResizable(false);
-		initStyle(StageStyle.TRANSPARENT);
+		initStyle(StageStyle.UNDECORATED);
 		
 		
 		choiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {

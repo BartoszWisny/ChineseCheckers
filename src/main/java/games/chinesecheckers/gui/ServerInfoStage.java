@@ -2,7 +2,6 @@ package games.chinesecheckers.gui;
 
 import games.chinesecheckers.client.ConnectionData;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -18,7 +17,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.stage.WindowEvent;
 
 public class ServerInfoStage extends Stage {
     ConnectionData data;
@@ -70,14 +68,6 @@ public class ServerInfoStage extends Stage {
         
         setScene(scene);
         setResizable(false);
-        initStyle(StageStyle.TRANSPARENT);
-        
-        ServerInfoStage.this.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            public void handle(WindowEvent event) {
-            	Platform.exit();
-                System.exit(0);
-            }
-        });  
+        initStyle(StageStyle.UNDECORATED);
     }
-
 }

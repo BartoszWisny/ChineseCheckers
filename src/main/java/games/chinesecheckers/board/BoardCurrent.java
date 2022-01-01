@@ -35,13 +35,11 @@ public class BoardCurrent extends Stage implements EventHandler<MouseEvent> {
 	private boolean active;
 	private List<BoardPawn> pawns;
 	private Label turnLabel;
-	private Button skipButton;
+	public Button skipButton;
 	private Label colorLabel;
 	private SkipTurnEvent skipEvent;
 	private Label emptyLabel1;
 	private Label emptyLabel2;
-	private Label emptyLabel3;
-	private Button forfeitButton;
 	
 	public BoardCurrent(Game game, int numberOfPlayer, Client client) {
 		this.game = game;
@@ -56,10 +54,8 @@ public class BoardCurrent extends Stage implements EventHandler<MouseEvent> {
 		this.skipButton = new Button("Skip turn");
 		this.skipEvent = new SkipTurnEvent(client, this);
 		this.skipButton.setOnAction(skipEvent);
-		this.emptyLabel1 = new Label("	");
-		this.emptyLabel2 = new Label("	");
-		this.emptyLabel3 = new Label("	");
-		this.forfeitButton = new Button("Forfeit");
+		this.emptyLabel1 = new Label("		");
+		this.emptyLabel2 = new Label("		");
 		
 		drawBoard();
 	}
@@ -85,30 +81,25 @@ public class BoardCurrent extends Stage implements EventHandler<MouseEvent> {
         this.skipButton.setDisable(true);
         this.emptyLabel1.setFont(new Font("Times New Roman", 18));
         this.emptyLabel2.setFont(new Font("Times New Roman", 18));
-        this.emptyLabel3.setFont(new Font("Times New Roman", 18));
-        this.forfeitButton.setMinHeight(30.0);
-        this.forfeitButton.setMinWidth(80.0);
-        this.forfeitButton.setFont(new Font("Times New Roman", 18));
         bottomPane.add(colorLabel, 0, 0);
         bottomPane.add(emptyLabel1, 1, 0);
         bottomPane.add(turnLabel, 2, 0);
         bottomPane.add(emptyLabel2, 3, 0);
         bottomPane.add(skipButton, 4, 0);
-        bottomPane.add(emptyLabel3, 5, 0);
-        bottomPane.add(forfeitButton, 6, 0);
-		
+        
 		AnchorPane pane = new AnchorPane();
 		AnchorPane.setLeftAnchor(group, 20.0);
 		AnchorPane.setTopAnchor(group, 20.0);
 		AnchorPane.setLeftAnchor(bottomPane, 20.0);
 		AnchorPane.setTopAnchor(bottomPane, 700.0);
 		pane.getChildren().addAll(group, bottomPane);
-        pane.setBackground(new Background(new BackgroundFill(Color.LIGHTSALMON, CornerRadii.EMPTY, Insets.EMPTY)));
+        
+		pane.setBackground(new Background(new BackgroundFill(Color.ALICEBLUE, CornerRadii.EMPTY, Insets.EMPTY)));
         pane.setStyle("-fx-border-color: black");
 		Scene scene = new Scene(pane, pane.prefWidth(0) + 20.0, pane.prefHeight(0) + 20.0);
 		this.setScene(scene);
 		setResizable(false);
-		initStyle(StageStyle.TRANSPARENT);
+		initStyle(StageStyle.UNDECORATED);
 	}
 	
 	private void drawField(Field field, Group group) {

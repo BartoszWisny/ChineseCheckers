@@ -12,7 +12,6 @@ import java.util.List;
 import javax.naming.CommunicationException;
 
 import games.chinesecheckers.game.gamesettings.GameSettings;
-// import server.exceptions.GameNotFoundException;
 
 public class Server extends ServerSocket {
 	private boolean serverRunning = true;
@@ -22,7 +21,7 @@ public class Server extends ServerSocket {
         super(port);
     }
 
-    public void listen() throws IOException, CommunicationException/* , GameNotFoundException */ {
+    public void listen() throws IOException, CommunicationException {
         while (serverRunning) {
             System.out.println("Start");
             Socket newPlayer = accept();
@@ -49,15 +48,17 @@ public class Server extends ServerSocket {
             System.out.println("Thread started");
         }
         else if(playerType.equals("join")) {
-        	/* try { */
+        	try {
         		String message = "";
         		for (GameThread thread : games) {
-                    GameSettings settings = thread.getSettings();
-                    String started = Boolean.toString(thread.hasStarted());
-                    int gameId = games.indexOf(thread);
-                    int numberOfJoinedPlayers = thread.getNumberOfJoinedPlayers();
-                    int numberOfPlayers = settings.getNumberOfPlayers();
-                    message += "possible" + " " + gameId + " " + numberOfPlayers + " " + numberOfJoinedPlayers + " " + started + "x";
+        			if (!thread.isOver) {
+	        			GameSettings settings = thread.getSettings();
+	                    String started = Boolean.toString(thread.hasStarted());
+	                    int gameID = games.indexOf(thread);
+	                    int numberOfJoinedPlayers = thread.getNumberOfJoinedPlayers();
+	                    int numberOfPlayers = settings.getNumberOfPlayers();
+	                    message += "possible" + " " + gameID + " " + numberOfPlayers + " " + numberOfJoinedPlayers + " " + started + "x";
+        			}    
                 }
         		
                 message = message.substring(0, message.length() - 1);
@@ -66,17 +67,15 @@ public class Server extends ServerSocket {
         		System.out.println(chosenIDLine);
         		int id = Integer.parseInt(chosenIDLine.split(" ")[1]);
         		GameThread gameThread = findOpenGame(id);
-        		/* if (gameThread == null)
-        		    throw new GameNotFoundException(); */
         		gameThread.addPlayer(player, hostInputReader, hostOutoutWriter);
-        	/* }
-        	catch(GameNotFoundException e) {
+        	}
+        	catch(Exception e) {
         		hostOutoutWriter.println("No game found");
-        	} */
+        	}
         }
     }
 
-    private GameThread findOpenGame(int id) /* throws  GameNotFoundException */ {
+    private GameThread findOpenGame(int id) {
         return games.get(id);
     }
 

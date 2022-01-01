@@ -11,7 +11,12 @@ import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.util.Duration;
 
 public class ListenerThread extends Thread {
     private BufferedReader in;
@@ -20,6 +25,9 @@ public class ListenerThread extends Thread {
     private Game game;
     private BoardCurrent board;
     private volatile List<String> gameLobbyArgs;
+    private String[] messageWinner = {"You won! Congratulations!", "You finished 2nd!", "You finished 3rd!", "You finished 4th!", "You finished 5th!", "You finished 6th!"};
+    private String[] messageOther = {" won!", " finished 2nd!", " finished 3rd!", " finished 4th!", " finished 5th!", " finished 6th!"};
+    private int messageCounter = -1;
 
     public ListenerThread(BufferedReader in, Client client) {
         this.in = in;
@@ -64,8 +72,16 @@ public class ListenerThread extends Thread {
                     } else if (currentLine.contains("No game found")) {
                         Platform.runLater(new Runnable() {
 							public void run() {
-							    InfoStage stage = new InfoStage("Game not found");
-							    stage.show();
+								final InfoStage newStage = new InfoStage("No game found!");
+								newStage.show();
+								PauseTransition delay = new PauseTransition(Duration.seconds(10));
+								delay.setOnFinished(new EventHandler<ActionEvent>() {
+									public void handle(ActionEvent event) {
+										newStage.close();
+										System.exit(0);
+									}
+								});
+								delay.play();
 							}
 						});
                     } else if (currentLine.contains("move")) {
@@ -92,13 +108,21 @@ public class ListenerThread extends Thread {
                     } else if (currentLine.contains("winner")) {
                         String[] string = currentLine.split(" ");
                         int number = Integer.parseInt(string[1]);
-
+                        
                         if (number == this.playerNumber) {
                             Platform.runLater(new Runnable() {
 								public void run() {
-								    InfoStage newStage = new InfoStage("You won!");
+								    final InfoStage newStage = new InfoStage(messageWinner[messageCounter]);
 								    System.out.println(currentLine);
 								    newStage.show();
+								    PauseTransition delay = new PauseTransition(Duration.seconds(10));
+									delay.setOnFinished( new EventHandler<ActionEvent>() {
+										public void handle(ActionEvent event) {
+											newStage.close();
+											System.exit(0);
+										}
+									});
+									delay.play();
 								}
 							});
                         } else {
@@ -107,16 +131,26 @@ public class ListenerThread extends Thread {
 
                             Platform.runLater(new Runnable() {
 								public void run() {
-								    InfoStage newStage = new InfoStage(color + " won!");
+									final InfoStage newStage = new InfoStage(color + messageOther[messageCounter]);
 								    System.out.println(currentLine);
 								    newStage.show();
+								    PauseTransition delay = new PauseTransition(Duration.seconds(10));
+									delay.setOnFinished( new EventHandler<ActionEvent>() {
+										public void handle(ActionEvent event) {
+											newStage.close();
+										}
+									});
+									delay.play();
 								}
 							});
                         }
+                        
+                        messageCounter++;
                     }
                 }
             }
             catch (Exception e) {
+            	System.out.println("Unable to run this thread!");
             }
         }
     }

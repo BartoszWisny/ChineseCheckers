@@ -45,7 +45,7 @@ public class BoardField extends Circle implements BoardElement {
 		if(color == FieldColor.BLUE) {
 			this.setFill(Color.LIGHTSKYBLUE);
 		} else if(color == FieldColor.WHITE) {
-			this.setFill(Color.GHOSTWHITE);
+			this.setFill(Color.WHITE);
 		} else if(color == FieldColor.RED) {
 			this.setFill(Color.MISTYROSE);
 		} else if(color == FieldColor.BLACK) {
