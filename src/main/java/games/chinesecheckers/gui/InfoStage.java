@@ -19,7 +19,16 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
+/**
+ * Klasa odpowiada za wygenerowanie okna z odpowiednimi komunikatami wyœwietlanego po wykonaniu odpowiednich akcji przez klienta (miêdzy innymi z³e po³¹czenie z serwerem, próba do³¹czenia do gry przed jej rozpoczêciem, próba zamkniêcia aplikacji).
+ */
+
 public class InfoStage extends Stage {
+	
+	/**
+	 * Konstruktor generuje okno z odpowiednimi komunikatami wyœwietlane po wykonaniu odpowiednich akcji przez klienta (miêdzy innymi z³e po³¹czenie z serwerem, próba do³¹czenia do gry przed jej rozpoczêciem, próba zamkniêcia aplikacji) i odpowiada za zarz¹dzanie obs³ug¹ okna.
+	 */
+	
 	public InfoStage(String string) {
 		GridPane pane = new GridPane();
 		pane.setAlignment(Pos.CENTER);

@@ -1,18 +1,34 @@
 package games.chinesecheckers.game.gamesettings;
 
+/**
+ * Klasa odpowiada za ustalenie ustawieñ danej rozgrywki.
+ */
+
 public final class GameSettings {
     private int numberOfPlayers;
     public int[] playersNumbers;
 
+    /**
+     * Konstruktor ustala liczbê graczy w danej rozgrywce na podstawie otrzymanego komunikatu tekstowego.
+     */
+    
     public GameSettings(String line) {
     	String[] parameters = line.split("o");
     	String numberOfPlayersString = parameters[0];
     	numberOfPlayers = Integer.parseInt(numberOfPlayersString);
     }
+    
+    /**
+     * Metoda zwraca liczbê graczy bior¹cych udzia³ w danej rozgrywce.
+     */
 
     public int getNumberOfPlayers() {
         return numberOfPlayers;
     }
+    
+    /**
+     * Metoda zwraca odpowiednie numery graczy bior¹cych udzia³ w danej rozgrywce w zale¿noœci od liczby graczy.
+     */
     
     public int[] getPlayersNumbers() {
     	playersNumbers = new int[numberOfPlayers];
@@ -39,6 +55,10 @@ public final class GameSettings {
     	
     	return playersNumbers;
     }
+    
+    /**
+     * Metoda zwraca dane o ustawieniach dla danej gry w postaci tekstowej.
+     */
     
     public String toString() {
     	return Integer.toString(numberOfPlayers) + "o";

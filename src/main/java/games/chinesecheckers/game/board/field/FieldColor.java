@@ -1,8 +1,16 @@
 package games.chinesecheckers.game.board.field;
 
+/**
+ * Klasa definiuje kolory pól planszy.
+ */
+
 public enum FieldColor {
 	BLUE, WHITE, RED, BLACK, YELLOW, GREEN, NONE;
 
+	/**
+	 * Metoda ustala kolory pól planszy w zale¿noœci od numeru danego gracza.
+	 */
+	
     public static FieldColor setColor(int number) {
         switch (number) {
             case 0:
@@ -21,6 +29,10 @@ public enum FieldColor {
                 return FieldColor.NONE;
         }
     }
+    
+    /**
+     * Metoda ustala kolory pól planszy przeciwnika w zale¿noœci od koloru danego gracza.
+     */
 	
 	public static FieldColor getOpponent(FieldColor color) {
         switch (color) {
@@ -41,6 +53,10 @@ public enum FieldColor {
         }
     }
     
+	/**
+	 * Metoda zwraca informacjê o kolorze w postaci tekstowej.
+	 */
+	
     public String toString() {
     	switch (this) {
     	case BLUE:

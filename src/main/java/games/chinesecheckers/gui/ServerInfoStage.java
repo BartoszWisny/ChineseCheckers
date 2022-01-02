@@ -21,8 +21,16 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
+/**
+ * Klasa odpowiada za wygenerowanie okna z mo¿liwoœci¹ wpisania danych serwera (adres, port) i pod³¹czenia do danego serwera.
+ */
+
 public class ServerInfoStage extends Stage {
     ConnectionData data;
+    
+    /**
+     * Konstruktor generuje okno z mo¿liwoœci¹ wpisania danych serwera (adres, port) i pod³¹czenia do danego serwera oraz odpowiada za zarz¹dzanie obs³ug¹ okna.
+     */
     
     public ServerInfoStage(final ConnectionData data) {
         this.data = data;

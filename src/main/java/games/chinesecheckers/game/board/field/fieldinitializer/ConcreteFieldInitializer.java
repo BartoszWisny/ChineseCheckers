@@ -7,13 +7,26 @@ import games.chinesecheckers.game.board.field.NeutralField;
 import games.chinesecheckers.game.board.field.HomeField;
 import games.chinesecheckers.game.board.field.FieldColor;
 
+/**
+ * Klasa implementuje metody generuj¹ce pola planszy oraz inicjalizuje pola planszy na podstawie ustalonego rozmiaru planszy.
+ */
+
 public class ConcreteFieldInitializer extends FieldInitializer {
+	
+	/**
+	 * Konstruktor ustawia pola planszy na te utworzone dla danej planszy.
+	 */
+	
 	public ConcreteFieldInitializer(Board board) {
         this.fields = board.getFields();
     }
 	
 	public static int n = BoardSize.boardSize; // HEXAGONAL_SIDE - 1
 	private int currentCounter = 0;
+	
+	/**
+	 * Metoda generuje pola wewnêtrzne planszy w zale¿noœci od ustalonego rozmiaru planszy.
+	 */
 	
 	public int[][] hexagonBounds() {
         int n = BoardSize.boardSize;
@@ -35,6 +48,10 @@ public class ConcreteFieldInitializer extends FieldInitializer {
 
         return HEXAGON_BOUNDS;
     }
+	
+	/**
+	 * Metoda inicjalizuje pola startowe graczy w zale¿noœci od ustalonego rozmiaru planszy oraz kolorów pól startowych.
+	 */
 
     @Override
     protected void initializePlayerHomeFields() {
@@ -50,6 +67,10 @@ public class ConcreteFieldInitializer extends FieldInitializer {
             colorNumber++;
         }
     }
+    
+    /**
+	 * Metoda inicjalizuje pola wewnêtrzne planszy w zale¿noœci od ustalonego rozmiaru planszy.
+	 */
 
     @Override
     protected void initializeHexagonFields() {

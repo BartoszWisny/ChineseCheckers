@@ -24,7 +24,15 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
+/**
+ * Klasa odpowiada za wygenerowanie okna z mo¿liwoœci¹ wyboru liczby graczy dla danej rozgrywki.
+ */
+
 public class CreateGameStage extends Stage {
+	
+	/**
+	 * Konstruktor generuje okno z mo¿liwoœci¹ wyboru liczby graczy dla danej rozgrywki i odpowiada za zarz¹dzanie obs³ug¹ okna.
+	 */
 	
 	public CreateGameStage(final Client client) {
 		AnchorPane pane = new AnchorPane();       

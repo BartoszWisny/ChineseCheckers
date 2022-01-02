@@ -25,12 +25,24 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
+/**
+ * Klasa uruchamia dzia³anie aplikacji dla gracza i generuje odpowiednie okna dla gracza podczas rozpoczêcia pracy aplikacji.
+ */
+
 public class RunClient extends Application {
 	private Client client;
+	
+	/**
+	 * Metoda uruchamia dzia³anie aplikacji dla gracza.
+	 */
 	
     public static void main(String[] args) {
     	launch(args);
     }
+    
+    /**
+     * Metoda wyœwietla okno dla nowego klienta, który ³¹czy siê z serwerem gry, a po pod³¹czeniu klienta do serwera wyœwietla okno umo¿liwiaj¹ce wybór utworzenia gry lub do³¹czenia do gry i odpowiednio zarz¹dza wyborami gracza.
+     */
     
     @Override
 	public void start(Stage startStage) throws IOException {

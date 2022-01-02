@@ -16,6 +16,10 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Random;
 
+/**
+ * Klasa uruchamia dan¹ rozgrywkê jako w¹tek i zarz¹dza przebiegiem danej rozgrywki.
+ */
+
 public class GameThread extends Thread {
     private boolean started = false;
     public boolean isOver = false;
@@ -30,6 +34,10 @@ public class GameThread extends Thread {
     private int numberOfJoinedPlayers = 0;
     private GameSettings settings;
 
+    /**
+     * Konstruktor ustala ustawienia gry, dodaje graczy ustalaj¹c odpowiednie gniazdo, bufor wejœcia i wyjœcia, ustala komunikacjê klient-serwer, ustala walidatora dla rozgrywki. 
+     */
+    
     public GameThread(GameSettings settings, Socket host, BufferedReader in, PrintWriter out) throws IOException {
         this.settings = settings;
         communicationData.setUp(settings.getNumberOfPlayers());
@@ -37,14 +45,26 @@ public class GameThread extends Thread {
         addPlayer(host, in, out);
         validator = new GameAnalyzer(game);
     }
+    
+    /**
+     * Metoda zwraca liczbê graczy, którzy do³¹czyli do danej rozgrywki.
+     */
 
     public int getNumberOfJoinedPlayers() {
         return numberOfJoinedPlayers;
     }
+    
+    /**
+     * Meotda zwraca dane o ustawieniach danej rozgrywki.
+     */
 
     public GameSettings getSettings() {
         return settings;
     }
+    
+    /**
+     * Metoda zarz¹dza przeprowadzeniem danej rozgrywki (oczekiwanie na graczy, ustawienie parametrów rozgrywki, wylosowanie gracza rozpoczynaj¹cego grê, kolejkowanie ruchów graczy, pobieranie ruchów i ich wykonywanie).
+     */
 
     @Override
     public void run()  {
@@ -80,6 +100,10 @@ public class GameThread extends Thread {
             }
         }
     }
+    
+    /**
+     * Metoda oczekuje na ruch danego gracza, wysy³a odpowiednie komunikaty, sprawdza, czy gracz pomin¹³ ruch w danej kolejce, sprawdza, czy ruch wykonany przez gracza jest ruchem dozwolonym. 
+     */
 
     private MoveDetails listenForMove() throws Exception {
         boolean isMoveLegal = false;
@@ -106,6 +130,10 @@ public class GameThread extends Thread {
         return details;
     }
 
+    /**
+     * Metoda wczytuje dane o ruchu danego gracza (wspó³rzêdne pola pocz¹tkowego, wspó³rzêdne pola koñcowego), ustawia odpowiednio status pól planszy na podstawie ruchu gracza, sprawdza rodzaj ruchu i wysy³a wszystkim graczom informacjê o ruchu wykonanym przez danego gracza.
+     */
+    
     private void makeMove(MoveDetails details) throws Exception {
     	if(details != null) {
             int oldDiagonal = details.getOldDiagonal();
@@ -127,10 +155,18 @@ public class GameThread extends Thread {
     	}
     }
     
+    /**
+     * Metoda sprawdza, czy gracz o danym numerze znajduje siê na liœcie zwyciêzców, czyli czy gracz ukoñczy³ ju¿ dan¹ rozgrywkê.
+     */
+    
     private boolean isWinner(int number) {
     	Player player = this.game.getPlayerByNumber(number);
     	return this.game.isWinner(player);
     }
+    
+    /**
+     * Metoda dodaje gracza do odpowiedniej rozgrywki, ustala ustawienia rozgrywki dla danego gracza i wysy³a komunikat o ustawieniach.
+     */
 
     public void addPlayer(Socket player, BufferedReader in, PrintWriter out) throws IOException {
         communicationData.addPlayer(player, in, out);
@@ -138,10 +174,18 @@ public class GameThread extends Thread {
         out.println(gameSettings.toString());
         numberOfJoinedPlayers++;
     }
+    
+    /**
+     * Metoda sprawdza, czy dana rozgrywka zosta³a rozpoczêta.
+     */
 
     public boolean hasStarted() {
         return started;
     }
+    
+    /**
+     * Metoda sprawdza, czy gracz zakoñczy³ swój ruch oraz sprawdza, czy po tym ruchu gracz zakoñczy³ swoj¹ rozgrywkê.
+     */
     
     public void endMove() throws Exception {
     	if(skip == true) {
@@ -172,18 +216,34 @@ public class GameThread extends Thread {
            currentPlayerNumber = (currentPlayerNumber + 1) % game.getNumberOfPlayers();            
         }
     }
+    
+    /**
+     * Metoda sprawdza, czy wybrany pionek ma mo¿liwoœæ wykonania skoku w jakimkolwiek kierunku oraz czy wykonany ruch by³ skokiem.
+     */
 
     private boolean hasPossibleJumps(Pawn pawn) throws Exception {
         return validator.hasPossibleJumps(pawn) && hasJumped;
     }
     
+    /**
+     * Metoda sprawdza, czy dana rozgrywka zosta³a zakoñczona.
+     */
+    
     private boolean over() {
     	return this.numberOfJoinedPlayers == this.game.getNumberOfWinners();
     }
     
+    /**
+     * Metoda sprawdza, czy gracz o danym numerze zakoñczy³ grê.
+     */
+    
     private boolean hasFinished(int number) {
     	return this.validator.hasFinished(this.game.getPlayerByNumber(number));
     }
+    
+    /**
+     * Metoda dodaje gracza o danym numerze do listy zwyciêzców, czyli listy graczy, którzy ukoñczyli ju¿ dan¹ rozgrywkê.
+     */
     
     private void addWinner(int number) {
     	this.game.addWinner(this.game.getPlayerByNumber(number));

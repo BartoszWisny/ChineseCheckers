@@ -25,16 +25,28 @@ import javafx.util.Duration;
 
 import java.util.List;
 
+/**
+ * Klasa odpowiada za wygenerowanie okna z mo¿liwoœci¹ wyboru rozgrywki z listy dostêpnych gier.
+ */
+
 public class LobbyStage extends Stage {
 	private int currentRow = 1;
     private boolean noGameToJoin = true;
 	
+    /**
+     * Klasa odpowiada za wygenerowanie danych (widoku dla okna) dla pojedynczej rozgrywki znajduj¹cej siê na liœcie gier.
+     */
+    
     private class GameInfoRow {
         public Label gameIDLabel;
         public Label playersLabel;
         public Label joinedPlayersLabel;
         public JoinButton button;
 
+        /**
+         * Konstruktor generuje dane (widok dla okna) dla pojedynczej rozgrywki znajduj¹cej siê na liœcie gier.
+         */
+        
         public GameInfoRow(String gameID, String players, String joinedPlayers, String hasStarted) {
             gameIDLabel = new Label(gameID);
             gameIDLabel.setFont(new Font("Times New Roman", 14));
@@ -46,13 +58,26 @@ public class LobbyStage extends Stage {
             button.setFont(new Font("Times New Roman", 14));
         }
     }
+    
+    /**
+     * Klasa odpowiada za wygenerowanie przycisku, który pozwala do³¹czyæ do wybranej rozgrywki.
+     */
 
     private class JoinButton extends Button {
-        JoinButton(Boolean hasStarted) {
+        
+    	/**
+         * Konstruktor generuje przycisk, który pozwala do³¹czyæ do wybranej rozgrywki i ustala go jako nieaktywny, je¿eli dana rozgrywka siê rozpoczê³a.
+         */
+    	
+    	JoinButton(Boolean hasStarted) {
             setText("Join");
             setDisable(hasStarted == true);
         }
     }
+    
+    /**
+     * Konstruktor generuje okno z mo¿liwoœci¹ wyboru rozgrywki z listy dostêpnych gier i odpowiada za zarz¹dzanie obs³ug¹ okna.
+     */
 
     public LobbyStage(final Client client, List<String> args) {
         GridPane pane = new GridPane();

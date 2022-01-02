@@ -38,4 +38,3 @@ public class ServerTests {
 		Assert.assertTrue(server2.isClosed());
     }
 }
-

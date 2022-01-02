@@ -18,6 +18,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.util.Duration;
 
+/**
+ * Klasa odpowiada za nas³uchiwanie informacji wysy³anych przez innych graczy i serwer gry oraz wyœwietlanie odpowiednich okien dla danego gracza w zale¿noœci od tych komunikatów lub momentu danej rozgrywki.
+ */
+
 public class ListenerThread extends Thread {
     private BufferedReader in;
     private Client client;
@@ -29,10 +33,18 @@ public class ListenerThread extends Thread {
     private String[] messageOther = {" won!", " finished 2nd!", " finished 3rd!", " finished 4th!", " finished 5th!", " finished 6th!"};
     private int messageCounter = -1;
 
+    /**
+     * Konstuktor przypisuje pod odpowiednie zmienne przekazane dane bufora odczytuj¹cego dane wejœciowe oraz dane klienta, dla którego uruchamiane jest nas³uchiwanie.
+     */
+    
     public ListenerThread(BufferedReader in, Client client) {
         this.in = in;
         this.client = client;
     }
+    
+    /**
+     * Metoda wywo³uje odpowiednie metody zarz¹dzaj¹ce przebiegiem gry, wyœwietlaniem okien dla gracza, umo¿liwaniem wykonania ruchu, odœwie¿aniem planszy po ruchach innych graczy oraz wyœwietlaniem odpowiednich komunikatów w zale¿noœci od wyborów gracza lub przebiegu rozgrywki na podstawie informacji odczytanych z wejœcia przez bufor.
+     */
 
     public void run() {
         while (true) {
@@ -155,6 +167,10 @@ public class ListenerThread extends Thread {
         }
     }
 
+    /**
+     * Metoda sprawdza, czy linia wczytana przez bufor zawiera jedynie numer.
+     */
+    
     private boolean isNumber(String line) {
         try {
             Integer.parseInt(line);
@@ -164,6 +180,10 @@ public class ListenerThread extends Thread {
         }
         return true;
     }
+    
+    /**
+     * Metoda sprawdza, czy linia wczytana przez bufor odpowiada linii, która powoduje ustawienie odpowiednich parametrów gry.
+     */
 
     private boolean isGameSettings(String line) {
     	return isNumber(line.substring(0,1)) && line.charAt(1) == 'o';

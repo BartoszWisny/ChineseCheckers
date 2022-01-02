@@ -33,6 +33,10 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
+/**
+ * Klasa odpowiada za wygenerowanie bie¿¹cego widoku planszy gry. Generuje pola planszy, pionki oraz reaguje na ruchy gracza. 
+ */
+
 public class BoardCurrent extends Stage implements EventHandler<MouseEvent> {
 	private Game game;
 	private Player player;
@@ -46,6 +50,10 @@ public class BoardCurrent extends Stage implements EventHandler<MouseEvent> {
 	private SkipTurnEvent skipEvent;
 	private Label emptyLabel1;
 	private Label emptyLabel2;
+	
+	/**
+	 * Konstruktor tworzy i ustawia parametry odpowiednich elementów generowanego okna dla planszy gry.
+	 */
 	
 	public BoardCurrent(Game game, int numberOfPlayer, Client client) {
 		this.game = game;
@@ -65,6 +73,10 @@ public class BoardCurrent extends Stage implements EventHandler<MouseEvent> {
 		
 		drawBoard();
 	}
+	
+	/**
+	 * Metoda odpowiada za wygenerowanie widoku planszy (pola i pionki) oraz za odpowiednie wyœwietlanie okna gracza i zarz¹dzanie obs³ug¹ okna.
+	 */
 	
 	private void drawBoard() {
 		Group group = new Group();
@@ -124,10 +136,18 @@ public class BoardCurrent extends Stage implements EventHandler<MouseEvent> {
 		});
 	}
 	
+	/**
+	 * Metoda generuje pole planszy i dodaje je do zbioru wszystkich elementów planszy.
+	 */
+	
 	private void drawField(Field field, Group group) {
 		BoardField boardField = new BoardField(field, this);
 		group.getChildren().add(boardField);
 	}
+	
+	/**
+	 * Metoda generuje pionek dla gracza, dodaje pionek do zbioru pionków i zbioru elementów planszy.
+	 */
 	
 	private void drawPawn(Pawn pawn, Group group) {
 		BoardPawn boardPawn = new BoardPawn(pawn, this);
@@ -135,9 +155,17 @@ public class BoardCurrent extends Stage implements EventHandler<MouseEvent> {
 		group.getChildren().add(boardPawn);
 	}
 	
+	/**
+	 * Metoda sprawdza, czy wybrany element planszy nale¿y do gracza, dla którego ta plansza jest generowana.
+	 */
+	
 	private boolean isMyElement(BoardElement element) {
 		return element.getColor().equals(player.getColor());
 	}
+	
+	/**
+	 * Metoda pobiera odpowiedni pionek ze zbioru pionków, jeœli pionek nie istnieje, zwracany jest wyj¹tek i komunikat.
+	 */
 	
 	private BoardPawn getBoardPawn(Pawn pawn) throws Exception {
 		for(BoardPawn boardPawn: this.pawns) {
@@ -147,9 +175,17 @@ public class BoardCurrent extends Stage implements EventHandler<MouseEvent> {
 		throw new Exception("Pawn doesn't exist");
 	}
 	
+	/**
+	 * Metoda ustawia odpowiedni napis na oknie w zale¿noœci od tego, czy dany gracz ma obecnie ruch.
+	 */
+	
 	public void setLabel(String string) {
 		this.turnLabel.setText(string);
 	}
+	
+	/**
+	 * Metoda aktywuje okno, by gracz móg³ wykonaæ ruch.
+	 */
 	
 	public void activate() {
 		this.active = true;
@@ -157,10 +193,18 @@ public class BoardCurrent extends Stage implements EventHandler<MouseEvent> {
 		skipButton.setDisable(false);
 	}
 	
+	/**
+	 * Metoda dezaktywuje okno, jeœli dany gracz nie ma obecnie swojej kolejki na wykonanie ruchu.
+	 */
+	
 	public void setUnactive() {
 		this.active = false;
 		skipButton.setDisable(true);
 	}
+	
+	/**
+	 * Metoda pobiera dane o ruchu gracza, wyszukuje odpowiedni pionek i wywo³uje metody odpowiedzialne za wykonanie ruchu pionka. Po ruchu okno jest dezaktywowane.
+	 */
 	
 	public void makeMove(String moveLine) throws Exception {
 		String[] line = moveLine.split(" ");
@@ -177,6 +221,10 @@ public class BoardCurrent extends Stage implements EventHandler<MouseEvent> {
 		this.active = false;
 		this.skipButton.setDisable(true);
 	}
+	
+	/**
+	 * Metoda przechwytuje klikniêcia myszy gracza. Jeœli jego okno jest aktywne, to ustawia bie¿¹cy pionek na ten wybrany przez gracza lub wysy³a komunikat, jeœli klikniête zosta³o pole planszy.
+	 */
 
 	public void handle(MouseEvent event) {
 		Object source = event.getSource();

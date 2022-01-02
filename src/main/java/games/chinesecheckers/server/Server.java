@@ -13,13 +13,25 @@ import javax.naming.CommunicationException;
 
 import games.chinesecheckers.game.gamesettings.GameSettings;
 
+/**
+ * Klasa ustala dane serwera gry.
+ */
+
 public class Server extends ServerSocket {
 	private boolean serverRunning = true;
     private List<GameThread> games = new ArrayList<GameThread>();
 
+    /**
+     * Konstruktor ustala gniazdo serwera pod odpowiednim portem.
+     */
+    
     public Server(int port) throws IOException {
         super(port);
     }
+    
+    /**
+     * Metoda uruchamia dzia³anie serwera i wysy³a odpowiednie komunikaty w zale¿noœci od akcji wykonanej przez gracza.
+     */
 
     public void listen() throws IOException, CommunicationException {
         while (serverRunning) {
@@ -33,6 +45,10 @@ public class Server extends ServerSocket {
             processPlayerType(playerType, newPlayer);
         }
     }
+    
+    /**
+     * Metoda sprawdza, czy dany gracz tworzy now¹ rozgrywkê, czy chce do³¹czyæ do utworzonej rozgrywki. Dla hosta ustawia odpowiednie parametry gry w zale¿noœci od wyborów hosta, natomiast dla gracza do³¹czaj¹cego do gry sprawdza, czy gracz mo¿e do³¹czyæ do danej rogrywki i ustala dane tego gracza w danej rozgrywce. 
+     */
 
     private void processPlayerType(String playerType, Socket player) throws IOException {
         BufferedReader hostInputReader = getPlayerInputStreamReader(player);
@@ -74,10 +90,18 @@ public class Server extends ServerSocket {
         	}
         }
     }
+    
+    /**
+     * Metoda wyszukuje grê z listy gier na podstawie ID rozgrywki.
+     */
 
     private GameThread findOpenGame(int id) {
         return games.get(id);
     }
+    
+    /**
+     * Metoda ustala ustawienia gry na podstawie informacji wejœciowych.
+     */
 
     private GameSettings setUpGame(BufferedReader hostInputReader) throws IOException {
         System.out.println("Inside setUp");
@@ -85,10 +109,18 @@ public class Server extends ServerSocket {
         System.out.println("Options: "+ gameOptionsLine.charAt(0));
         return new GameSettings(gameOptionsLine);
     }
+    
+    /**
+     * Metoda zwraca bufor wejœcia danego gracza na podstawie jego gniazda.
+     */
 
     private BufferedReader getPlayerInputStreamReader(Socket player) throws IOException {
         return new BufferedReader(new InputStreamReader(player.getInputStream()));
     }
+    
+    /**
+     * Metoda zwraca bufor wyjœcia danego gracza na podstawie jego gniazda.
+     */
 
     private PrintWriter getPlayerOutputStreamWriter(Socket player) throws IOException {
         return new PrintWriter(new OutputStreamWriter(player.getOutputStream()), true);
