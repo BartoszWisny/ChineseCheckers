@@ -1,9 +1,13 @@
 package games.chinesecheckers.gui;
 
 import games.chinesecheckers.client.Client;
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -17,6 +21,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 
 public class CreateGameStage extends Stage {
 	
@@ -47,13 +53,28 @@ public class CreateGameStage extends Stage {
         Scene scene = new Scene(pane, 260.0, 115.0);
 		this.setScene(scene);
 		setResizable(false);
-		initStyle(StageStyle.UNDECORATED);
-		
+		initStyle(StageStyle.UNDECORATED);		
 		
 		choiceBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 		    public void changed(ObservableValue<? extends Number> arg, Number number1, Number number2) {
 				button.setOnAction(new CreateGameStageEvent(CreateGameStage.this, choiceList[number2.intValue()], client));	
 			}
+		});
+		
+		Platform.setImplicitExit(false);
+		this.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			public void handle(WindowEvent event) {
+		        event.consume();
+		        final InfoStage newStage = new InfoStage("You can't close this game!");
+			    newStage.show();
+			    PauseTransition delay = new PauseTransition(Duration.seconds(10));
+				delay.setOnFinished( new EventHandler<ActionEvent>() {
+					public void handle(ActionEvent event) {
+						newStage.close();
+					}
+				});
+				delay.play();
+		    }
 		});
 	}
 }

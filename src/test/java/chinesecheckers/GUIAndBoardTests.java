@@ -7,7 +7,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.naming.CommunicationException;
+
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import games.chinesecheckers.board.BoardCurrent;
@@ -27,11 +30,31 @@ import games.chinesecheckers.gui.CreateGameStage;
 import games.chinesecheckers.gui.InfoStage;
 import games.chinesecheckers.gui.LobbyStage;
 import games.chinesecheckers.gui.ServerInfoStage;
+import games.chinesecheckers.server.Server;
 
 public class GUIAndBoardTests {
+	Thread threadServer;
+	Server server;
 	
-    @Test
-    public void testCreateGameStage() throws InterruptedException { // just checking if GUI shows, run server before tests
+    @Before
+    public void runServer() throws InterruptedException {
+    	  threadServer = new Thread(new Runnable() {
+	       	public void run() {
+	       		
+	       		try {
+					server = new Server(8080);
+					server.listen();
+				} catch (CommunicationException | IOException e) {
+					e.printStackTrace();
+				}	       		
+	        }
+	    });
+        
+        threadServer.start();
+    }
+	
+	@Test
+    public void testCreateGameStage() throws InterruptedException, IOException {
         int i = 0;
         
         if (i == 0) {
@@ -127,15 +150,16 @@ public class GUIAndBoardTests {
 		    thread.start();
 		    Thread.sleep(10000);
 		    i++;
-	    } 
+	    }
 	    
-	    
+	    threadServer.interrupt();
+		server.close();
     }
     
     BoardCurrent boardCurrent;
 	
 	@Test
-	public void boardTest() throws InterruptedException {
+	public void boardTest() throws InterruptedException, IOException {
 		GameSettings settings = new GameSettings("6o");
 		final Game game = new Game(settings);
 		BoardSize boardSize = new BoardSize();
@@ -347,9 +371,8 @@ public class GUIAndBoardTests {
 		boardPawn.move(testField2, null);
 		Assert.assertEquals(10, boardPawn.getDiagonal());
 		Assert.assertEquals(2, boardPawn.getRow());
-	}
-	
-	public void stopTest() {
-		return;
+		
+		threadServer.interrupt();
+		server.close();
 	}	
 }

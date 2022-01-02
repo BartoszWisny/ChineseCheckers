@@ -9,7 +9,6 @@ import java.net.Socket;
 import javafx.stage.Stage;
 
 public class Client {
-	
 	private Socket socket;
     private BufferedReader in;
     private PrintWriter out;

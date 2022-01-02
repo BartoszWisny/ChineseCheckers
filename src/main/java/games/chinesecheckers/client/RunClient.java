@@ -22,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 public class RunClient extends Application {
@@ -66,6 +67,22 @@ public class RunClient extends Application {
 			startStage.setResizable(false);
 			startStage.initStyle(StageStyle.UNDECORATED);
 			startStage.show();
+			
+			Platform.setImplicitExit(false);
+			startStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+				public void handle(WindowEvent event) {
+			        event.consume();
+			        final InfoStage newStage = new InfoStage("You can't close this game!");
+				    newStage.show();
+				    PauseTransition delay = new PauseTransition(Duration.seconds(10));
+					delay.setOnFinished( new EventHandler<ActionEvent>() {
+						public void handle(ActionEvent event) {
+							newStage.close();
+						}
+					});
+					delay.play();
+			    }
+			});
 		} catch (IOException e) {
 			Platform.runLater(new Runnable() {
 				public void run() {
@@ -82,5 +99,5 @@ public class RunClient extends Application {
 				}
 			});
 		}   	
-	}   
+	}
 }
